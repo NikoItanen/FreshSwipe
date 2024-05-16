@@ -16,14 +16,15 @@ class _LoginState extends State<LoginPage> {
       // Title for the application
       title: 'FreshSwipe',
       home: Scaffold(
-        backgroundColor: Color.fromARGB(255, 205, 246, 164),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: Center(
           heightFactor: 3.5,
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            const Image(image: AssetImage('freshswipe-1.png'), width: 300, height: 300),
             // Title text to the login page.
             const Text('FreshSwipe',
                 style: TextStyle(
-                    fontSize: 48, color: Color.fromRGBO(64, 81, 47, 1))),
+                    fontSize: 48, color: Color.fromRGBO(0, 3, 72, 1))),
             const SizedBox(height: 20),
             // Username input field.
             const Padding(
@@ -46,7 +47,7 @@ class _LoginState extends State<LoginPage> {
                     decoration: InputDecoration(
                         hintText: 'Password',
                         suffixIcon: IconButton(
-                          icon: const Icon(Icons.remove_red_eye),
+                          icon: const Icon(Icons.remove_red_eye, color: Color.fromRGBO(0, 3, 72, 1),),
                           onPressed: () {
                             setState(() {
                               _obscureText = !_obscureText;
@@ -59,7 +60,7 @@ class _LoginState extends State<LoginPage> {
             TextButton(
               style: TextButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Colors.black,
+                  backgroundColor: Color.fromRGBO(0, 3, 72, 1),
                   fixedSize: const Size(170, 40)),
               child: const Text('Log In'),
               onPressed: () {
@@ -67,10 +68,11 @@ class _LoginState extends State<LoginPage> {
                 Navigator.pushNamed(context, '/menupage');
               },
             ),
+            // Register button
             TextButton(
               style: TextButton.styleFrom(
-                  foregroundColor: const Color.fromARGB(255, 0, 0, 0)),
-              child: const Text('Create a new account!'),
+                  foregroundColor: Color.fromARGB(255, 153, 163, 255)),
+              child: const Text('Create a new account!', style: TextStyle(fontSize: 12),),
               onPressed: () {
                 // TODO: Make the login logic here
                 print("Register button pressed!");
