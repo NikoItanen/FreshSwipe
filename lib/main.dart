@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:freshswipe/menu_page.dart';
-import 'package:freshswipe/login_page.dart';
+import 'menu_page.dart';
+import 'login_page.dart';
+import 'cleaning_page.dart';
+import 'user_page.dart';
+import 'rewards_page.dart';
 
 void main() {
   runApp(const FreshSwipe());
@@ -17,7 +20,10 @@ class FreshSwipe extends StatelessWidget {
         home: const LoginPage(),
         routes: {
           '/menupage': (context) => const MenuPage(),
-          '/loginpage': (context) => const LoginPage()
+          '/loginpage': (context) => const LoginPage(),
+          '/user': (context) => const UserPage(),
+          '/rewards': (context) => const RewardPage(),
+          '/cleaning': (context) => const CleaningPage()
         });
   }
 }

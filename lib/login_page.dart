@@ -17,10 +17,11 @@ class _LoginState extends State<LoginPage> {
       title: 'FreshSwipe',
       home: Scaffold(
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
-        body: Center(
-          heightFactor: 3.5,
+        body: SingleChildScrollView(
+          child: Center(
+          heightFactor: 1.5,
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const Image(image: AssetImage('freshswipe-1.png'), width: 300, height: 300),
+            const Image(image: AssetImage('assets/freshswipe-1.png'), width: 300, height: 300),
             // Title text to the login page.
             const Text('FreshSwipe',
                 style: TextStyle(
@@ -80,6 +81,7 @@ class _LoginState extends State<LoginPage> {
             ),
           ]),
         ),
+        )
       ),
     );
   }
