@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _LoginState extends State<LoginPage> {
       // Title for the application
       title: 'FreshSwipe',
       home: Scaffold(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Center(
           heightFactor: 1.5,
@@ -61,7 +62,7 @@ class _LoginState extends State<LoginPage> {
             TextButton(
               style: TextButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Color.fromRGBO(0, 3, 72, 1),
+                  backgroundColor: const Color.fromRGBO(0, 3, 72, 1),
                   fixedSize: const Size(170, 40)),
               child: const Text('Log In'),
               onPressed: () {
@@ -72,11 +73,13 @@ class _LoginState extends State<LoginPage> {
             // Register button
             TextButton(
               style: TextButton.styleFrom(
-                  foregroundColor: Color.fromARGB(255, 153, 163, 255)),
+                  foregroundColor: const Color.fromARGB(255, 153, 163, 255)),
               child: const Text('Create a new account!', style: TextStyle(fontSize: 12),),
               onPressed: () {
                 // TODO: Make the login logic here
-                print("Register button pressed!");
+                if (kDebugMode) {
+                  print("Register button pressed!");
+                }
               },
             ),
           ]),

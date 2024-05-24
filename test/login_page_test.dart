@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:freshswipe/login_page.dart';
@@ -19,7 +20,9 @@ void main() {
       await tester.tap(find.text('FreshSwipe'));
       debugPrint("Found initial FreshSwipe text.");
     } catch (e) {
-      print("Error navigating to MenuPage: $e");
+      if (kDebugMode) {
+        print("Error navigating to MenuPage: $e");
+      }
     }
 
     //Ensure the Login button is visible by scrolling if necessary
@@ -32,14 +35,18 @@ void main() {
       await tester.pumpAndSettle();
       debugPrint('Tapped Log In and navigated to menu page.');
     } catch (e) {
-      print('Error navigating to menu page: $e');
+      if (kDebugMode) {
+        print('Error navigating to menu page: $e');
+      }
     }
 
     try {
       expect(find.text('Welcome back [USER]!'), findsOneWidget);
       debugPrint('Found welcome text on menu page.');
     } catch (e) {
-      print('Error finding welcome text on menu page: $e');
+      if (kDebugMode) {
+        print('Error finding welcome text on menu page: $e');
+      }
     }
   });
 }

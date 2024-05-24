@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:freshswipe/widgets/navbar.dart';
 
 class MenuPage extends StatefulWidget {
@@ -40,7 +38,7 @@ class _MenuPage extends State<MenuPage> {
     return MaterialApp(
         title: "FreshSwipe",
         home: Scaffold(
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           body: Center(
             //Content over here:
             child: SingleChildScrollView(
@@ -80,7 +78,7 @@ class _MenuPage extends State<MenuPage> {
                         width: double.infinity,
                         height: 85,
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(0, 3, 72, 1),
+                          color: const Color.fromRGBO(0, 3, 72, 1),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: const Padding(
