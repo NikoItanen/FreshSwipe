@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:freshswipe/widgets/navbar.dart';
+import 'package:freshswipe/widgets/global/navbar.dart';
+import 'package:freshswipe/widgets/global/cleanliness_star.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -27,7 +28,7 @@ class _MenuPage extends State<MenuPage> {
       Navigator.pushNamed(context, '/rewards');
       break;
     case 3:
-      Navigator.pushNamed(context, '/cleaning');
+      Navigator.pushNamed(context, '/rooms');
       break;
   }
 }
@@ -49,31 +50,8 @@ class _MenuPage extends State<MenuPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 50, bottom: 50),
-                          child: SizedBox(
-                              width: 65,
-                              height: 65,
-                              child: Stack(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.star,
-                                    size: 65,
-                                    color: Colors.orange,
-                                    shadows: [
-                                      Shadow(
-                                          color: Color.fromARGB(255, 36, 35, 0),
-                                          blurRadius: 3,
-                                          offset: Offset(0, 1))
-                                    ],
-                                  ),
-                                  Center(child: Text("X"))
-                                ],
-                              )),
-                        ),
-                      ),
+                      TotalCleanlinessStar(),
+                      const SizedBox(height: 20),
                       Container(
                         width: double.infinity,
                         height: 85,

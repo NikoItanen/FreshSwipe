@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freshswipe/widgets/navbar.dart';
+import 'package:freshswipe/widgets/global/navbar.dart';
 
 class RewardPage extends StatefulWidget {
   const RewardPage ({super.key});
@@ -27,7 +27,7 @@ int _selectedIndex = 2;
       Navigator.pushNamed(context, '/rewards');
       break;
     case 3:
-      Navigator.pushNamed(context, '/cleaning');
+      Navigator.pushNamed(context, '/rooms');
       break;
   }
 }
