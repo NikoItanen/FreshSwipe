@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:freshswipe/models/user.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,6 +11,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginState extends State<LoginPage> {
   bool _obscureText = true;
+  final TextEditingController _usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +31,13 @@ class _LoginState extends State<LoginPage> {
                     fontSize: 48, color: Color.fromRGBO(0, 3, 72, 1))),
             const SizedBox(height: 20),
             // Username input field.
-            const Padding(
-                padding: EdgeInsets.all(10.0),
+            Padding(
+                padding: const EdgeInsets.all(10.0),
                 child: SizedBox(
                   width: 400,
                   child: TextField(
-                    decoration: InputDecoration(
+                    controller: _usernameController,
+                    decoration: const InputDecoration(
                       hintText: 'Username',
                     ),
                   ),
@@ -67,6 +70,11 @@ class _LoginState extends State<LoginPage> {
               child: const Text('Log In'),
               onPressed: () {
                 // TODO: Make the login logic here
+                String username = _usernameController.text;
+                User user = User(username: username, joiningDate: DateTime.now());
+                if (kDebugMode) {
+                  print('User: ${user.getUsername} logged in successfully!');
+                }
                 Navigator.pushNamed(context, '/menupage');
               },
             ),

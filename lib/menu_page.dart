@@ -50,7 +50,7 @@ class _MenuPage extends State<MenuPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      TotalCleanlinessStar(),
+                      const TotalCleanlinessStar(),
                       const SizedBox(height: 20),
                       Container(
                         width: double.infinity,
@@ -62,7 +62,7 @@ class _MenuPage extends State<MenuPage> {
                         child: const Padding(
                           padding: EdgeInsets.all(10),
                           child: Text(
-                            'Welcome back [USER]!',
+                            'Welcome back!',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),

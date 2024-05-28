@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class RoomDialog extends StatelessWidget {
-  const RoomDialog({super.key});
+  final VoidCallback onAddRoom;
+
+   const RoomDialog({required this.onAddRoom, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,11 @@ class RoomDialog extends StatelessWidget {
                               const TextField(
                                 decoration:
                                     InputDecoration(hintText: 'Room Name: '),
-                              )
+                              ),
+                              TextButton(
+                                child: const Text('Add Room'),
+                                onPressed: () {
+                              })
                             ],
                           ))));
             }));

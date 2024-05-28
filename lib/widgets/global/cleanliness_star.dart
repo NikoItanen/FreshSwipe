@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TotalCleanlinessStar extends StatelessWidget {
-  double cleanlinessRate = 8.7;
+  final double cleanlinessRate = 8.7;
 
-  TotalCleanlinessStar({
+  const TotalCleanlinessStar({
     super.key});
 
   @override

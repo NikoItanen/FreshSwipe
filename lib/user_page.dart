@@ -25,7 +25,7 @@ class _UserPage extends State<UserPage> {
       case 1:
         Navigator.pushNamed(context, '/menupage');
         break;
-      case 2:
+      case 2: 
         Navigator.pushNamed(context, '/rewards');
         break;
       case 3:
@@ -49,7 +49,7 @@ class _UserPage extends State<UserPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  TotalCleanlinessStar(),
+                  const TotalCleanlinessStar(),
                   const SizedBox(height: 20),
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 450),
