@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+// This dialog takes responsibility for a new room, house, or apartment creation.
 class RoomDialog extends StatelessWidget {
   final VoidCallback onAddRoom;
 
@@ -38,6 +40,8 @@ class RoomDialog extends StatelessWidget {
                               TextButton(
                                 child: const Text('Add Room'),
                                 onPressed: () {
+                                  onAddRoom();
+                                  Navigator.pop(context);
                               })
                             ],
                           ))));

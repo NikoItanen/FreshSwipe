@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+//This class takes responsibility for the functionality and appearance of the navigation bar at the bottom of the screen. 
+
 class CustomBottomNavigationBar extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onItemTapped;

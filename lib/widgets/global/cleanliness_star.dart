@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+//This class takes responsibility for the functionality and appearance of the cleanliness star. 
+
 class TotalCleanlinessStar extends StatelessWidget {
   final double cleanlinessRate = 8.7;
 

@@ -41,7 +41,7 @@ void main() {
     }
 
     try {
-      expect(find.text('Welcome back [USER]!'), findsOneWidget);
+      expect(find.text('Welcome back!'), findsOneWidget);
       debugPrint('Found welcome text on menu page.');
     } catch (e) {
       if (kDebugMode) {

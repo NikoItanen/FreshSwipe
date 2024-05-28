@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+//This class takes responsibility for the room listing. 
+
 class RoomScrollView extends StatefulWidget {
   final List<int> top;
   const RoomScrollView({required this.top, super.key});

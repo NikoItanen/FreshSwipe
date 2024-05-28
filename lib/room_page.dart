@@ -14,10 +14,12 @@ class RoomsPage extends StatefulWidget {
 class _RoomsPage extends State<RoomsPage> {
   int _selectedIndex = 3;
 
-  List<int> top = <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  List<int> top = <int>[];
 
   void _addRoom() {
-    top.add(top.length + 1);
+    setState(() {
+      top.add(top.length + 1);
+    });
   }
 
   void _onItemTapped(int index) {
@@ -43,54 +45,54 @@ class _RoomsPage extends State<RoomsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "FreshSwipe",
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-            child: FractionallySizedBox(
-          alignment: Alignment.center,
-          widthFactor: 0.9,
-          heightFactor: 0.9,
-          child: Column(
-            children: [
-              const TotalCleanlinessStar(),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Container(
-                  width: double.infinity,
-                  height: 80,
-                  decoration: BoxDecoration(
-                      color: const Color.fromRGBO(0, 3, 72, 1),
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Row(
-                    children: [
-                      const Padding(
-                          padding: EdgeInsets.only(left: 20),
-                          child: Text(
-                            "Your Appartment",
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          )),
-                      const Spacer(),
-                      RoomDialog(onAddRoom: _addRoom)
-                    ],
-                  ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+          child: FractionallySizedBox(
+        alignment: Alignment.center,
+        widthFactor: 0.9,
+        heightFactor: 0.9,
+        child: Column(
+          children: [
+            const TotalCleanlinessStar(),
+            const SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Container(
+                width: double.infinity,
+                height: 80,
+                decoration: BoxDecoration(
+                    color: const Color.fromRGBO(0, 3, 72, 1),
+                    borderRadius: BorderRadius.circular(20)),
+                child: Row(
+                  children: [
+                    const Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Text(
+                          "Your Appartment",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        )),
+                    const Spacer(),
+                    RoomDialog(onAddRoom: _addRoom)
+                  ],
                 ),
               ),
-              Expanded(
-                child: RoomScrollView(
-                  top: top,
-                ),
-              )
-            ],
-          ),
-        )),
-        bottomNavigationBar: CustomBottomNavigationBar(
-            selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
-      ),
+            ),
+            top.isEmpty
+                ? const SizedBox(height: 100, child: Text(
+                        'You don\'t have rooms yet! Add a new one by pressing the "+" button.'),) 
+                : Expanded(
+                    child: RoomScrollView(
+                      top: top,
+                    ),
+                  )
+          ],
+        ),
+      )),
+      bottomNavigationBar: CustomBottomNavigationBar(
+          selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
     );
   }
 }

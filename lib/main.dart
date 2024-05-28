@@ -15,9 +15,13 @@ class FreshSwipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        // Title for the application
+        title: "FreshSwipe",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(primaryColor: Colors.blue),
+        //Define the starting page.
         home: const LoginPage(),
+        //Specify all routes to the created pages.
         routes: {
           '/menupage': (context) => const MenuPage(),
           '/loginpage': (context) => const LoginPage(),

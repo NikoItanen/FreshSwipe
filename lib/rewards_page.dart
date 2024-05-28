@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freshswipe/widgets/global/cleanliness_star.dart';
 import 'package:freshswipe/widgets/global/navbar.dart';
+import 'package:freshswipe/widgets/rewardwidgets/reward_scroll_view.dart';
 
 class RewardPage extends StatefulWidget {
   const RewardPage({super.key});
@@ -35,56 +36,64 @@ class _RewardPage extends State<RewardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "FreshSwipe",
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-          child: FractionallySizedBox(
-              alignment: Alignment.center,
-              widthFactor: 0.9,
-              heightFactor: 0.9,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const TotalCleanlinessStar(),
-                  const SizedBox(height: 20),
-                  Flexible(
-                    child: Stack(children: [
-                      Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: const Color.fromRGBO(0, 3, 72, 1),
-                              borderRadius: BorderRadius.circular(20))),
-                      const Padding(
-                          padding: EdgeInsets.only(top: 20),
-                          child: Column(children: [
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Text(
-                                'Rewards',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 24),
-                              ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: FractionallySizedBox(
+            alignment: Alignment.center,
+            widthFactor: 0.9,
+            heightFactor: 0.9,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                const TotalCleanlinessStar(),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: Stack(children: [
+                    Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: const Color.fromRGBO(0, 3, 72, 1),
+                            borderRadius: BorderRadius.circular(20))),
+                    const Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Column(children: [
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Text(
+                              'Rewards',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Divider(
-                              color: Colors.white,
-                              thickness: 1,
-                              indent: 20,
-                              endIndent: 20,
-                            )
-                          ]))
-                    ]),
-                  )
-                ],
-              )),
-        ),
-        bottomNavigationBar: CustomBottomNavigationBar(
-            selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Divider(
+                            color: Colors.white,
+                            thickness: 1,
+                            indent: 20,
+                            endIndent: 20,
+                          ),
+                          Text(
+                            'The First Ever Clean-Up!',
+                            style: TextStyle(color: Colors.white, fontSize: 24),
+                          ),
+                          Text('Do the first cleaning!',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14)),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Expanded(child: RewardScrollView())
+                        ]))
+                  ]),
+                )
+              ],
+            )),
       ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+          selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
     );
   }
 }
