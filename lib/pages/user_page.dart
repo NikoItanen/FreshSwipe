@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:freshswipe/auth.dart';
 import 'package:freshswipe/widgets/global/cleanliness_star.dart';
 import 'package:freshswipe/widgets/global/navbar.dart';
 
@@ -12,6 +14,15 @@ class UserPage extends StatefulWidget {
 
 class _UserPage extends State<UserPage> {
   int _selectedIndex = 0;
+  final User? user = Auth().currentUser;
+
+  Future<void> signOut() async {
+    await Auth().signOut();
+  }
+
+  Widget _userUid() {
+    return Text(user?.email ?? 'User email');
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -60,6 +71,7 @@ class _UserPage extends State<UserPage> {
                   child: Center(
                       child: Column(
                     children: [
+                      _userUid(),
                       _userInfo(context),
                       _userPageButton(context, "Account Settings", Colors.white,
                           () {
@@ -70,7 +82,9 @@ class _UserPage extends State<UserPage> {
                       const Spacer(),
                       _userPageButton(context, "Log Out",
                           const Color.fromRGBO(167, 85, 85, 1), () {
-                        Navigator.pushNamed(context, "/loginpage");
+                        signOut().then((_) {
+                          Navigator.pushNamedAndRemoveUntil(context, '/loginpage', (route) => false);
+                        });
                       }),
                       const SizedBox(
                         height: 10,
@@ -99,8 +113,8 @@ Widget _userInfo(BuildContext context) {
           padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Username: ", style: TextStyle(color: Colors.white)),
+            children: <Widget>[
+              Text("Username:", style: TextStyle(color: Colors.white)),
               SizedBox(
                 height: 8,
               ),

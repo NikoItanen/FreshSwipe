@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:freshswipe/login_page.dart';
-import 'package:freshswipe/menu_page.dart';
+import 'package:freshswipe/pages/login_page.dart';
+import 'package:freshswipe/pages/menu_page.dart';
 
 void main() {
   testWidgets('Login page test', (WidgetTester tester) async {
