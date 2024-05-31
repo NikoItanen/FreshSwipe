@@ -10,12 +10,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+
+      - name: Setup latest Java 21 Version.
+        uses: actions/setup-java@v1
         with:
           java-version: "21.x"
-      - uses: subosito/flutter-action@v1
+
+      - name: Set up Flutter.
+        uses: subosito/flutter-action@v1
         with:
           channel: "stable"
-      - run: flutter pub get
-      - run: flutter analyze
-      - run: flutter test
+
+      - name: Install Dependencies.
+        run: flutter pub get
+
+      - name: Create empty .env file
+        run: echo "Creating .env file" && touch assets/.env
+
+      - name: Analyze structure and errors in code.
+        run: flutter analyze
+
+      - name: Run test files.
+        run: flutter test
