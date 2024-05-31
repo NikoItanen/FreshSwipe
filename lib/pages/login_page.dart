@@ -76,7 +76,9 @@ class _LoginState extends State<LoginPage> {
   }
 
   Widget _onLoginView() {
-    return Column(children: [
+    return Column(
+      key: const ValueKey('login'),
+      children: [
       // Email input field.
               Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -139,7 +141,9 @@ class _LoginState extends State<LoginPage> {
   }
 
     Widget _onSignUpView() {
-    return Column(children: [
+    return Column(
+      key: const ValueKey('signUp'),
+      children: [
       // Email input field.
               Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -258,17 +262,23 @@ class _LoginState extends State<LoginPage> {
             heightFactor: 1.5,
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const Image(
-                  image: AssetImage('assets/freshswipe-1.png'),
-                  width: 300,
-                  height: 300),
-              // Title text to the login page.
-              const Text('FreshSwipe',
-                  style: TextStyle(
-                      fontSize: 48, color: Color.fromRGBO(0, 3, 72, 1))),
-              const SizedBox(height: 20),
-              isLogin == true ? _onLoginView() : _onSignUpView(),
-              Text(errorMessage == '' ? '' : '$errorMessage')
+                  AnimatedSwitcher(duration: const Duration(milliseconds: 500), child: isLogin == true? const Image(
+                      image: AssetImage('assets/freshswipe-1.png'),
+                      width: 300,
+                      height: 300) : const SizedBox(height: 10,),),
+                  
+                  // Title text to the login page.
+                  const Text('FreshSwipe',
+                      style: TextStyle(
+                          fontSize: 48, color: Color.fromRGBO(0, 3, 72, 1))),
+                  const SizedBox(height: 20),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    transitionBuilder: (Widget child, Animation<double> animation) {
+                      return FadeTransition(opacity: animation, child: child,);
+                    },
+                    child: isLogin ? _onLoginView() : _onSignUpView(),),
+                    Text(errorMessage == '' ? '' : '$errorMessage')
             ]),
           ),
         ));

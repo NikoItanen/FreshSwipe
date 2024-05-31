@@ -40,11 +40,12 @@ class _MenuPage extends State<MenuPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Center(
-        //Add page's content here:
-        child: SingleChildScrollView(
+        //Add page's content here:(
           child: FractionallySizedBox(
               alignment: Alignment.topCenter,
               widthFactor: 0.9,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 40),
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Column(
@@ -55,7 +56,7 @@ class _MenuPage extends State<MenuPage> {
                     _buildWelcomeContainer(context)
                   ],
                 ),
-              )),
+              ),)
         ),
       ),
       //The navigation bar here:

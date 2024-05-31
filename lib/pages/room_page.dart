@@ -16,11 +16,6 @@ class _RoomsPage extends State<RoomsPage> {
 
   List<int> top = <int>[];
 
-  void _addRoom() {
-    setState(() {
-      top.add(top.length + 1);
-    });
-  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -66,16 +61,16 @@ class _RoomsPage extends State<RoomsPage> {
                 decoration: BoxDecoration(
                     color: const Color.fromRGBO(0, 3, 72, 1),
                     borderRadius: BorderRadius.circular(20)),
-                child: Row(
+                child: const Row(
                   children: [
-                    const Padding(
+                    Padding(
                         padding: EdgeInsets.only(left: 20),
                         child: Text(
                           "Your Appartment",
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         )),
-                    const Spacer(),
-                    RoomDialog(onAddRoom: _addRoom)
+                    Spacer(),
+                    RoomDialog()
                   ],
                 ),
               ),
