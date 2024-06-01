@@ -14,7 +14,6 @@ class RoomsPage extends StatefulWidget {
 class _RoomsPage extends State<RoomsPage> {
   int _selectedIndex = 3;
 
-  List<int> top = <int>[];
 
 
   void _onItemTapped(int index) {
@@ -75,12 +74,8 @@ class _RoomsPage extends State<RoomsPage> {
                 ),
               ),
             ),
-            top.isEmpty
-                ? const SizedBox(height: 100, child: Text(
-                        'You don\'t have rooms yet! Add a new one by pressing the "+" button.'),) 
-                : Expanded(
+                const Expanded(
                     child: RoomScrollView(
-                      top: top,
                     ),
                   )
           ],
