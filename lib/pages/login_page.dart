@@ -47,10 +47,12 @@ class _LoginState extends State<LoginPage> {
         email: _emailController.text,
         password: _passwordController.text);
 
-        addUserDetails(
+        final user = FirebaseAuth.instance.currentUser;
+        await addUserDetails(
           _firstNameController.text,
           _lastNameController.text,
           _emailController.text,
+          user!.uid
   );
 
     } on FirebaseAuthException catch (e) {
@@ -61,8 +63,8 @@ class _LoginState extends State<LoginPage> {
   }
 
   Future<void> addUserDetails(
-    String firstName, String lastName, String email) async {
-      await FirebaseFirestore.instance.collection('users').add({
+    String firstName, String lastName, String email, String userId) async {
+      await FirebaseFirestore.instance.collection('users').doc(userId).set({
         'firstName': firstName,
         'lastName': lastName,
         'email': email

@@ -66,7 +66,7 @@ class _RoomsPage extends State<RoomsPage> {
                     Padding(
                         padding: EdgeInsets.only(left: 20),
                         child: Text(
-                          "Your Appartment",
+                          "Your Housing",
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         )),
                     Spacer(),
