@@ -291,8 +291,8 @@ class RoomDialogState extends State<RoomDialog> {
       String userId = user.uid;
       String housingName = housingNameController.text;
       if (kDebugMode) {
-        print('Room name: $housingName');
-        print('Main app: $isChecked');
+        print('Housing name: $housingName');
+        print('Main housing: $isChecked');
       }
 
       await FirebaseFirestore.instance.collection('users').doc(userId).collection('housings').add({

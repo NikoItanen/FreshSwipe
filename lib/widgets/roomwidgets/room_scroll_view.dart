@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:freshswipe/enums/room.dart';
+import 'package:freshswipe/pages/cleaning_page.dart';
 
 //This class takes responsibility for the room listing. 
 
@@ -15,7 +16,9 @@ class RoomScrollView extends StatefulWidget {
 class _RoomScrollView extends State<RoomScrollView> {
 
   List<String> roomItems = [];
+  RoomType? roomType;
   String? selectedHousingId;
+  String? selectedHousingName;
   List<DropdownMenuItem<String>> housingDropdownItems = [];
   bool roomAdded = false;
   int cCode = 0;
@@ -55,9 +58,8 @@ class _RoomScrollView extends State<RoomScrollView> {
                     Positioned.fill(child: TextButton(
                       child: Text(roomItems[index], style: const TextStyle(color: Colors.white),),
                       onPressed: () {
-                      if (kDebugMode) {
-                        print('Room ${roomItems[index]} is pressed!');
-                      }},))
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CleaningPage(roomName: roomItems[index], selectedHousingName: selectedHousingName!, selectedHousingId: selectedHousingId!)));
+                      },))
                     ],) 
                 ));
               },
@@ -93,11 +95,20 @@ class _RoomScrollView extends State<RoomScrollView> {
               hint: const Text('Select Housing'),
               value: selectedHousingId,
               
-              onChanged: (String? newValue) {
+              onChanged: (String? newValue) async {
+                if (newValue != null) {
+                  User? user = FirebaseAuth.instance.currentUser;
+                  if (user != null) {
+                    String userId = user.uid;
+                    DocumentSnapshot housingDoc = await FirebaseFirestore.instance.collection('users').doc(userId).collection('housings').doc(newValue).get();
+
                 setState(() {
-                  selectedHousingId = newValue!;
+                  selectedHousingId = newValue;
+                  selectedHousingName = housingDoc['housingName'];
                   _fetchRoomItems();
                 });
+                }
+                }
               },
               items: housingDropdownItems,
             ),
@@ -116,14 +127,20 @@ class _RoomScrollView extends State<RoomScrollView> {
         );
       }).toList();
 
+    if (items.isNotEmpty) {
+      String defaultHousingId = items.first.value!;
+      DocumentSnapshot defaultHousingDoc = await FirebaseFirestore.instance.collection('users').doc(userId).collection('housings').doc(defaultHousingId).get();
+    
+
       setState(() {
         housingDropdownItems = items;
         if (items.isNotEmpty) {
           selectedHousingId = items.first.value;
+          selectedHousingName = defaultHousingDoc['housingName'];
           _fetchRoomItems();
         }
       });
     }
   }
-
+  }
 }
