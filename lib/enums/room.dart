@@ -1,3 +1,5 @@
+//TODO: Define different operations for each specific room type.
+
 import 'package:flutter/material.dart';
 import 'package:freshswipe/enums/cleaning_operations.dart';
 

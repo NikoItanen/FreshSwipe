@@ -267,10 +267,12 @@ class RoomDialogState extends State<RoomDialog> {
       String userId = user.uid;
       String roomName = roomNameController.text;
       String roomType = selectedRoomType != null ? selectedRoomType.toString() : 'Unknown';
+      int roomPoints = 0;
 
       await FirebaseFirestore.instance.collection('users').doc(userId).collection('housings').doc(selectedHousingId).collection('rooms').add({
         'roomName': roomName,
         'roomType': roomType,
+        'roomPoints':roomPoints,
         'timeStamp': FieldValue.serverTimestamp()
       });
       if (kDebugMode) {
