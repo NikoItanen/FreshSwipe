@@ -64,10 +64,14 @@ class _LoginState extends State<LoginPage> {
 
   Future<void> addUserDetails(
     String firstName, String lastName, String email, String userId) async {
+      int points = 0;
+      int activities = 0;
       await FirebaseFirestore.instance.collection('users').doc(userId).set({
         'firstName': firstName,
         'lastName': lastName,
-        'email': email
+        'email': email,
+        'userCleaningPoints': points,
+        'cleaningActivities': activities
       });
     }
 

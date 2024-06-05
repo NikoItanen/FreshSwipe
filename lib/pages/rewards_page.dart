@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freshswipe/managers/reward_manager.dart';
 import 'package:freshswipe/widgets/global/cleanliness_star.dart';
 import 'package:freshswipe/widgets/global/navbar.dart';
 import 'package:freshswipe/widgets/rewardwidgets/reward_scroll_view.dart';
@@ -16,6 +17,7 @@ class _RewardPage extends State<RewardPage> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      RewardManager.checkAndUnlockRewards();
     });
 
     switch (index) {
@@ -75,13 +77,7 @@ class _RewardPage extends State<RewardPage> {
                             indent: 20,
                             endIndent: 20,
                           ),
-                          Text(
-                            'The First Ever Clean-Up!',
-                            style: TextStyle(color: Colors.white, fontSize: 24),
-                          ),
-                          Text('Do the first cleaning!',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 14)),
+                          
                           SizedBox(
                             height: 20,
                           ),

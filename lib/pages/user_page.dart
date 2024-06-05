@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freshswipe/auth.dart';
+import 'package:freshswipe/managers/user_manager.dart';
 import 'package:freshswipe/widgets/global/cleanliness_star.dart';
 import 'package:freshswipe/widgets/global/navbar.dart';
 
@@ -83,7 +84,8 @@ class _UserPage extends State<UserPage> {
                       _userPageButton(context, "Log Out",
                           const Color.fromRGBO(167, 85, 85, 1), () {
                         signOut().then((_) {
-                          Navigator.pushNamedAndRemoveUntil(context, '/loginpage', (route) => false);
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/loginpage', (route) => false);
                         });
                       }),
                       const SizedBox(
@@ -107,25 +109,49 @@ class _UserPage extends State<UserPage> {
 //Information about user's account.
 //TODO: Link this to the user model.
 Widget _userInfo(BuildContext context) {
-  return const Align(
-      alignment: Alignment.topLeft,
-      child: Padding(
-          padding: EdgeInsets.only(left: 20, top: 20, bottom: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text("Username:", style: TextStyle(color: Colors.white)),
-              SizedBox(
-                height: 8,
-              ),
-              Text("User Created: ", style: TextStyle(color: Colors.white)),
-              SizedBox(
-                height: 8,
-              ),
-              Text("Cleaning Activities: ",
-                  style: TextStyle(color: Colors.white))
-            ],
-          )));
+  return FutureBuilder(
+      future: Future.wait([
+        UserManager.fetchAllCleaningPoints(),
+        UserManager.fetchCleaningActivities(),
+        ]
+        ),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          int userCleaningPoints = snapshot.data?[0] ?? 0;
+          int cleaningActivities = snapshot.data?[1] ?? 0;
+
+          return Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const Text("Username:",
+                          style: TextStyle(color: Colors.white)),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      const Text("User Created: ",
+                          style: TextStyle(color: Colors.white)),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text("Cleaning Activities: $cleaningActivities",
+                          style: const TextStyle(color: Colors.white)),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text("Alltime Claimed Points: $userCleaningPoints",
+                          style: const TextStyle(color: Colors.white)),
+                    ],
+                  )));
+        }
+      });
 }
 
 //Custom Widget for the User Page buttons.

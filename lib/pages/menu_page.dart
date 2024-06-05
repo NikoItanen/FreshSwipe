@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freshswipe/auth.dart';
+import 'package:freshswipe/managers/user_manager.dart';
 import 'package:freshswipe/services/firebase_services.dart';
 import 'package:freshswipe/widgets/global/navbar.dart';
 import 'package:freshswipe/widgets/global/cleanliness_star.dart';
@@ -24,7 +25,7 @@ class _MenuPage extends State<MenuPage> {
         Navigator.pushNamed(context, '/user');
         break;
       case 1:
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushNamed(context, '/menupage');
         break;
       case 2:
         Navigator.pushNamed(context, '/rewards');
@@ -53,7 +54,10 @@ class _MenuPage extends State<MenuPage> {
                   children: [
                     const TotalCleanlinessStar(),
                     const SizedBox(height: 20),
-                    _buildWelcomeContainer(context)
+                    _buildWelcomeContainer(context),
+                    TextButton(child: const Text('Moikka'), onPressed: () {
+                      UserManager.addNewReward('firstCleaning');
+                    },)
                   ],
                 ),
               ),)

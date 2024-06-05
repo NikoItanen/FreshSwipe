@@ -161,6 +161,9 @@ class _CleaningPageState extends State<CleaningPage> {
     ));
   }
 
+  
+
+
   //A method of adding points to a specific room.
   Future<void> _addPointsToRoom(int points, int index) async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -191,6 +194,22 @@ class _CleaningPageState extends State<CleaningPage> {
               .collection('rooms')
               .doc(roomId);
 
+            DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(userId);
+
+            await FirebaseFirestore.instance.runTransaction((transaction) async {
+              DocumentSnapshot userSnapshot = await transaction.get(userRef);
+              if (userSnapshot.exists) {
+                int currentActivities = userSnapshot['cleaningActivities'] ?? 0;
+
+                int currentPoints = userSnapshot['userCleaningPoints'] ?? 0;
+                int updatedPoints = currentPoints + points;
+
+                transaction.update(userRef, {'cleaningActivities': currentActivities + 1, 'userCleaningPoints': updatedPoints});
+              }
+            });
+
+            
+
           // Update the new value of the points in the database.
           await FirebaseFirestore.instance.runTransaction((transaction) async {
             DocumentSnapshot roomSnapshot = await transaction.get(roomRef);
@@ -198,7 +217,7 @@ class _CleaningPageState extends State<CleaningPage> {
               int currentPoints = roomSnapshot['roomPoints'] ?? 0;
               int updatedPoints = currentPoints + points;
               transaction
-                  .update(roomRef, {'roomPoints': currentPoints + points});
+                  .update(roomRef, {'roomPoints': updatedPoints});
               if (kDebugMode) {
                 print('Points updated to $updatedPoints');
               }
@@ -216,6 +235,8 @@ class _CleaningPageState extends State<CleaningPage> {
               transaction.update(roomRef, {'operations': operations});
             }
           });
+
+          
         }
       } catch (e) {
         if (kDebugMode) {

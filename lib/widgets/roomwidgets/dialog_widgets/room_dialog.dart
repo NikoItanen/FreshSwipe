@@ -7,7 +7,6 @@ import 'package:freshswipe/enums/room.dart';
 // This dialog takes responsibility for a new room, house, or housing creation.
 class RoomDialog extends StatefulWidget {
   const RoomDialog({super.key});
-  // final VoidCallback onAddRoom;
   @override
   RoomDialogState createState() => RoomDialogState();
 }
@@ -304,7 +303,7 @@ class RoomDialogState extends State<RoomDialog> {
       });
 
       if (kDebugMode) {
-        print('Room added to Firestore!');
+        print('Housing added to Firestore!');
       }
     } else {
       if(kDebugMode) {
