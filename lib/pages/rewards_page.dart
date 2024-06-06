@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freshswipe/managers/reward_manager.dart';
-import 'package:freshswipe/widgets/global/cleanliness_star.dart';
+import 'package:freshswipe/widgets/global/level_star.dart';
 import 'package:freshswipe/widgets/global/navbar.dart';
 import 'package:freshswipe/widgets/rewardwidgets/reward_scroll_view.dart';
 
@@ -48,7 +48,7 @@ class _RewardPage extends State<RewardPage> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                const TotalCleanlinessStar(),
+                const LevelStar(),
                 const SizedBox(height: 20),
                 Expanded(
                   child: Stack(children: [

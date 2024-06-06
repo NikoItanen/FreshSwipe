@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freshswipe/enums/cleaner_levels.dart';
 
 class UserManager {
 
-  static Future<int> fetchDayStreak() async {
+  static Future<int> fetchAndHandleDayStreak() async {
     int dayStreak = 0;
 
     try {
@@ -16,17 +17,59 @@ class UserManager {
 
         if (userSnapshot.exists) {
           Map<String, dynamic> data = userSnapshot.data() as Map<String, dynamic>;
-          dayStreak = data['dayStreak'];
+          Timestamp latestActivityTimestamp = data['latestActivity'];
+          DateTime latestActivity = latestActivityTimestamp.toDate();
+
+          DateTime now = DateTime.now();
+          DateTime today = DateTime(now.year, now.month, now.day);
+          DateTime lastActivityDay = DateTime(latestActivity.year, latestActivity.month, latestActivity.day);
+
+          if (lastActivityDay.isAtSameMomentAs((today.subtract(const Duration(days: 1))))) {
+            dayStreak = data['dayStreak'] + 1;
+          } else if (lastActivityDay.isAtSameMomentAs((today))) {
+            dayStreak = data['dayStreak'];
+          } else {
+            dayStreak = 0;
+          }
+
+          await FirebaseFirestore.instance.collection('users').doc(userId).update(({'dayStreak': dayStreak}));
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error fetching user's streak");
+      }
+    } return dayStreak;
+  }
+
+  static Future<int> fetchAndHandleCurrentLevel() async {
+    int currentLevel = 0;
+
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if(user != null) {
+        String userId = user.uid;
+
+        DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+
+        if (userSnapshot.exists) {
+          Map<String, dynamic> data = userSnapshot.data() as Map<String, dynamic>;
+          int userCleaningPoints = data['userCleaningPoints'];
+
+
+          for (var level in Cleanerlevels.values) {
+            if (userCleaningPoints >= level.neededPoints) {
+              currentLevel = level.level;
+            }
+          }
         }
       }
     } catch (e) {
       if (kDebugMode) {
         print('Error fetching users points.');
       }
-    } return dayStreak;
+    } return currentLevel;
   }
-
-
 
   static Future<int> fetchAllCleaningPoints() async {
     int userCleaningPoints = 0;
@@ -70,6 +113,30 @@ class UserManager {
         print('Error fetching users points.');
       }
     } return cleaningActivities;
+  }
+
+  static Future<DateTime?> fetchUserCreatedDate() async {
+
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if(user != null) {
+        String userId = user.uid;
+
+        DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+
+        if (userSnapshot.exists) {
+          Map<String, dynamic> data = userSnapshot.data() as Map<String, dynamic>;
+          Timestamp userCreatedData = data['userCreated'];
+          DateTime userCreated = userCreatedData.toDate();
+
+          return userCreated;
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching users points.');
+      }
+    } return null;
   }
   
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:freshswipe/widgets/global/cleanliness_star.dart';
+import 'package:freshswipe/widgets/global/level_star.dart';
 import 'package:freshswipe/widgets/global/navbar.dart';
 import 'package:freshswipe/widgets/roomwidgets/dialog_widgets/room_dialog.dart';
 import 'package:freshswipe/widgets/roomwidgets/room_scroll_view.dart';
@@ -48,7 +48,7 @@ class _RoomsPage extends State<RoomsPage> {
         heightFactor: 0.9,
         child: Column(
           children: [
-            const TotalCleanlinessStar(),
+            const LevelStar(),
             const SizedBox(
               height: 20,
             ),

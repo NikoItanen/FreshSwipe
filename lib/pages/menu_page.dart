@@ -3,7 +3,7 @@ import 'package:freshswipe/auth.dart';
 import 'package:freshswipe/managers/user_manager.dart';
 import 'package:freshswipe/services/firebase_services.dart';
 import 'package:freshswipe/widgets/global/navbar.dart';
-import 'package:freshswipe/widgets/global/cleanliness_star.dart';
+import 'package:freshswipe/widgets/global/level_star.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -52,12 +52,9 @@ class _MenuPage extends State<MenuPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const TotalCleanlinessStar(),
+                    const LevelStar(),
                     const SizedBox(height: 20),
                     _buildWelcomeContainer(context),
-                    TextButton(child: const Text('Moikka'), onPressed: () {
-                      UserManager.addNewReward('firstCleaning');
-                    },)
                   ],
                 ),
               ),)
@@ -73,12 +70,14 @@ class _MenuPage extends State<MenuPage> {
 }
 
 //Menu page's welcome container built here:
-//TODO: Link this to the user model to have streak and name display.
 Widget _buildWelcomeContainer(BuildContext context) {
   double containerHeight = MediaQuery.of(context).size.height * 0.1;
 
-  return FutureBuilder<String?>(
-    future: Auth().getCurrentUserEmail(),
+  return FutureBuilder(
+    future: Future.wait([
+      Auth().getCurrentUserEmail(),
+      UserManager.fetchAndHandleDayStreak(),
+    ]),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return const CircularProgressIndicator();
@@ -86,7 +85,8 @@ Widget _buildWelcomeContainer(BuildContext context) {
         if (snapshot.hasError || !snapshot.hasData) {
           return const Text('Error fetching user data');
         } else {
-          String email = snapshot.data!;
+          String email = snapshot.data?[0] as String;
+          int currentStreak = snapshot.data?[1] as int;
           return FutureBuilder<Map<String, dynamic>>(
             future: FirebaseServices.getUserData(email),
             builder: (context, snapshot) {
@@ -116,11 +116,11 @@ Widget _buildWelcomeContainer(BuildContext context) {
                         ),
                         const Spacer(),
                         const Icon(Icons.local_fire_department, size: 42, color: Color.fromRGBO(226, 88, 34, 1)),
-                        const Padding(
-                          padding: EdgeInsets.only(right: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 20),
                           child: Text(
-                            '137',
-                            style: TextStyle(color: Color.fromRGBO(226, 88, 34, 1), fontSize: 34),
+                            '$currentStreak',
+                            style: const TextStyle(color: Color.fromRGBO(226, 88, 34, 1), fontSize: 34),
                           ),
                         ),
                       ],

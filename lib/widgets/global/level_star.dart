@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:freshswipe/managers/user_manager.dart';
 
 //This class takes responsibility for the functionality and appearance of the cleanliness star. 
 
-class TotalCleanlinessStar extends StatelessWidget {
-  final double cleanlinessRate = 8.7;
+class LevelStar extends StatelessWidget {
 
-  const TotalCleanlinessStar({
+  const LevelStar({
     super.key});
 
   @override
@@ -30,7 +30,17 @@ class TotalCleanlinessStar extends StatelessWidget {
                     offset: Offset(0, 1))
                 ],
               ),
-              Center(child: Text(cleanlinessRate.toString()),)
+              Center(
+                child: FutureBuilder<int>(
+                  future: UserManager.fetchAndHandleCurrentLevel(),
+                  builder:(context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else {
+                      final int currentLevel = snapshot.data ?? 0;
+                      return Text('$currentLevel');
+                    }
+                }),)
             ],
           )
         )

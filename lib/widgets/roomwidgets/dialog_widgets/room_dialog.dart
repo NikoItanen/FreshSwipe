@@ -95,40 +95,43 @@ class RoomDialogState extends State<RoomDialog> {
   Widget _dialogModeSwitchButtons(StateSetter setState) {
     return Row(
       children: [
-        Stack(
+        Expanded(child: Stack(
           children: [
             Container(
               color: !roomMode ? Colors.grey[400] : Colors.grey[600],
               height: 40,
               width: 225,
             ),
-            TextButton(
+            Center(child: TextButton(
                 child:
                     const Text('Room', style: TextStyle(color: Colors.white)),
                 onPressed: () {
                   setState(() {
                     roomMode = true;
                   });
-                })
+                }))
+            
           ],
-        ),
-        Stack(
+        )),
+        Expanded(child: Stack(
           children: [
             Container(
               color: roomMode ? Colors.grey[400] : Colors.grey[600],
               height: 40,
               width: 225,
             ),
-            TextButton(
+            Center(child: TextButton(
                 child: const Text('Housing',
                     style: TextStyle(color: Colors.white)),
                 onPressed: () {
                   setState(() {
                     roomMode = false;
                   });
-                })
+                }))
+            
           ],
-        )
+        ))
+        
       ],
     );
   }
@@ -164,7 +167,6 @@ class RoomDialogState extends State<RoomDialog> {
             child: DropdownMenu<RoomType>(
               controller: roomTypeController,
               menuHeight: 250,
-              width: 420,
               enableFilter: true,
               requestFocusOnTap: true,
               leadingIcon: const Icon(Icons.search),

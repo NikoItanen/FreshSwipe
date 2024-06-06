@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freshswipe/enums/room.dart';
-import 'package:freshswipe/widgets/global/cleanliness_star.dart';
+import 'package:freshswipe/widgets/global/level_star.dart';
 
 class CleaningPage extends StatefulWidget {
   final String roomName;
@@ -66,7 +66,7 @@ class _CleaningPageState extends State<CleaningPage> {
       heightFactor: 0.9,
       child: Column(
         children: [
-          const TotalCleanlinessStar(),
+          const LevelStar(),
           const SizedBox(
             height: 20,
           ),
@@ -127,7 +127,7 @@ class _CleaningPageState extends State<CleaningPage> {
 
                     return GestureDetector(
                         onHorizontalDragEnd: (details) {
-                          if (details.primaryVelocity! > 0 && canComplete) {
+                          if (details.primaryVelocity! > 0 && canComplete && !isCompletedList[index]) {
                             setState(() {
                               isCompletedList[index] = true;
                               _addPointsToRoom(operation.points, index);
@@ -200,14 +200,14 @@ class _CleaningPageState extends State<CleaningPage> {
               DocumentSnapshot userSnapshot = await transaction.get(userRef);
               if (userSnapshot.exists) {
                 int currentActivities = userSnapshot['cleaningActivities'] ?? 0;
+                
 
                 int currentPoints = userSnapshot['userCleaningPoints'] ?? 0;
                 int updatedPoints = currentPoints + points;
 
-                transaction.update(userRef, {'cleaningActivities': currentActivities + 1, 'userCleaningPoints': updatedPoints});
+                transaction.update(userRef, {'cleaningActivities': currentActivities + 1, 'userCleaningPoints': updatedPoints, 'latestActivity': Timestamp.now()});
               }
             });
-
             
 
           // Update the new value of the points in the database.

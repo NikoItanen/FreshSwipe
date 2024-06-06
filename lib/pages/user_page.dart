@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freshswipe/auth.dart';
 import 'package:freshswipe/managers/user_manager.dart';
-import 'package:freshswipe/widgets/global/cleanliness_star.dart';
+import 'package:freshswipe/widgets/global/level_star.dart';
 import 'package:freshswipe/widgets/global/navbar.dart';
 
 class UserPage extends StatefulWidget {
@@ -21,9 +21,7 @@ class _UserPage extends State<UserPage> {
     await Auth().signOut();
   }
 
-  Widget _userUid() {
-    return Text(user?.email ?? 'User email');
-  }
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -61,7 +59,7 @@ class _UserPage extends State<UserPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               // User Page content here below:
               children: [
-                const TotalCleanlinessStar(),
+                const LevelStar(),
                 const SizedBox(height: 20),
                 Container(
                   width: double.infinity,
@@ -72,7 +70,6 @@ class _UserPage extends State<UserPage> {
                   child: Center(
                       child: Column(
                     children: [
-                      _userUid(),
                       _userInfo(context),
                       _userPageButton(context, "Account Settings", Colors.white,
                           () {
@@ -107,12 +104,13 @@ class _UserPage extends State<UserPage> {
 }
 
 //Information about user's account.
-//TODO: Link this to the user model.
 Widget _userInfo(BuildContext context) {
   return FutureBuilder(
       future: Future.wait([
+        Auth().getCurrentUserEmail(),
         UserManager.fetchAllCleaningPoints(),
         UserManager.fetchCleaningActivities(),
+        UserManager.fetchUserCreatedDate()
         ]
         ),
       builder: (context, snapshot) {
@@ -121,8 +119,10 @@ Widget _userInfo(BuildContext context) {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          int userCleaningPoints = snapshot.data?[0] ?? 0;
-          int cleaningActivities = snapshot.data?[1] ?? 0;
+          String userEmail = snapshot.data?[0] as String;
+          int userCleaningPoints = snapshot.data?[1] as int;
+          int cleaningActivities = snapshot.data?[2] as int;
+          DateTime userCreatedDate = snapshot.data?[3] as DateTime;
 
           return Align(
               alignment: Alignment.topLeft,
@@ -131,13 +131,13 @@ Widget _userInfo(BuildContext context) {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const Text("Username:",
-                          style: TextStyle(color: Colors.white)),
+                      Text("Accounts email address: $userEmail",
+                          style: const TextStyle(color: Colors.white)),
                       const SizedBox(
                         height: 8,
                       ),
-                      const Text("User Created: ",
-                          style: TextStyle(color: Colors.white)),
+                      Text("User Created: ${userCreatedDate.day}.${userCreatedDate.month}.${userCreatedDate.year}",
+                          style: const TextStyle(color: Colors.white)),
                       const SizedBox(
                         height: 8,
                       ),

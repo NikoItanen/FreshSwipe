@@ -66,12 +66,18 @@ class _LoginState extends State<LoginPage> {
     String firstName, String lastName, String email, String userId) async {
       int points = 0;
       int activities = 0;
+      int dayStreak = 0;
+      int cleanerLevel = 1;
+      Timestamp userCreated = Timestamp.now();
       await FirebaseFirestore.instance.collection('users').doc(userId).set({
         'firstName': firstName,
         'lastName': lastName,
         'email': email,
         'userCleaningPoints': points,
-        'cleaningActivities': activities
+        'cleaningActivities': activities,
+        'dayStreak': dayStreak,
+        'userCreated': userCreated,
+        'cleanerLevel': cleanerLevel
       });
     }
 
