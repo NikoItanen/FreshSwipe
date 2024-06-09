@@ -1,3 +1,4 @@
+//Define all possible levels and their needed points to achieve level.
 enum Cleanerlevels {
   first(1, 0),
   second(2, 500),

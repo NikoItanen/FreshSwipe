@@ -20,6 +20,8 @@ class _MenuPage extends State<MenuPage> {
       _selectedIndex = index;
     });
 
+
+    // Switch to selected page:
     switch (index) {
       case 0:
         Navigator.pushNamed(context, '/user');

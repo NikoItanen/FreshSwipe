@@ -1,3 +1,5 @@
+//Define all possible cleaning opearations that can be added for different room types.
+
 enum CleaningOperations {
   vacuuming('Vacuuming', 50),
   dusting('Dusting', 30),

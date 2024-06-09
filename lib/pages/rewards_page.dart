@@ -20,6 +20,8 @@ class _RewardPage extends State<RewardPage> {
       RewardManager.checkAndUnlockRewards();
     });
 
+
+    // Switch to selected page:
     switch (index) {
       case 0:
         Navigator.pushNamed(context, '/user');

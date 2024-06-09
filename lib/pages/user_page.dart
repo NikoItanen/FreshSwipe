@@ -17,17 +17,17 @@ class _UserPage extends State<UserPage> {
   int _selectedIndex = 0;
   final User? user = Auth().currentUser;
 
+  // Sign out method.
   Future<void> signOut() async {
     await Auth().signOut();
   }
-
-
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
 
+    // Switch to selected page:
     switch (index) {
       case 0:
         Navigator.pushNamed(context, '/user');
@@ -44,6 +44,7 @@ class _UserPage extends State<UserPage> {
     }
   }
 
+// Page content built here:
   @override
   Widget build(BuildContext context) {
     double containerHeight = MediaQuery.of(context).size.height * 0.75;
@@ -82,7 +83,7 @@ class _UserPage extends State<UserPage> {
                           const Color.fromRGBO(167, 85, 85, 1), () {
                         signOut().then((_) {
                           Navigator.pushNamedAndRemoveUntil(
-                              context, '/loginpage', (route) => false);
+                              context, '/', (route) => false);
                         });
                       }),
                       const SizedBox(
@@ -103,7 +104,7 @@ class _UserPage extends State<UserPage> {
   }
 }
 
-//Information about user's account.
+//Information about user's account. Future builder will handle fetched data.
 Widget _userInfo(BuildContext context) {
   return FutureBuilder(
       future: Future.wait([
@@ -124,6 +125,8 @@ Widget _userInfo(BuildContext context) {
           int cleaningActivities = snapshot.data?[2] as int;
           DateTime userCreatedDate = snapshot.data?[3] as DateTime;
 
+
+          // All users details are listed here:
           return Align(
               alignment: Alignment.topLeft,
               child: Padding(

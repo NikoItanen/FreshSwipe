@@ -35,6 +35,7 @@ class _CleaningPageState extends State<CleaningPage> {
     _fetchRoomTypeFuture = _fetchRoomType();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -200,11 +201,12 @@ class _CleaningPageState extends State<CleaningPage> {
               DocumentSnapshot userSnapshot = await transaction.get(userRef);
               if (userSnapshot.exists) {
                 int currentActivities = userSnapshot['cleaningActivities'] ?? 0;
-                
 
+                //Initialize new points for user's total points.
                 int currentPoints = userSnapshot['userCleaningPoints'] ?? 0;
                 int updatedPoints = currentPoints + points;
 
+                // Send data to the database with updated amount of cleaning activities, users total points and last activity timestamp.
                 transaction.update(userRef, {'cleaningActivities': currentActivities + 1, 'userCleaningPoints': updatedPoints, 'latestActivity': Timestamp.now()});
               }
             });
@@ -286,6 +288,7 @@ class _CleaningPageState extends State<CleaningPage> {
                     .add({'lastCompleted': Timestamp.fromDate(DateTime(1970))});
               }
 
+              // Send updated list of timestamps for all operations.
               transaction.update(roomRef, {'operations': operations});
 
               if (kDebugMode) {

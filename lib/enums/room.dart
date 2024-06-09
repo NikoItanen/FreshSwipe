@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:freshswipe/enums/cleaning_operations.dart';
 
+
+//Define all possible room types that can be set to a new room.
 enum RoomType {
   bedroom('Bedroom', Icons.bed, [
     CleaningOperations.vacuuming,

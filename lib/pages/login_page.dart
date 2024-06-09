@@ -16,12 +16,14 @@ class _LoginState extends State<LoginPage> {
   bool isLogin = true;
   String? errorMessage = '';
 
+  //Controllers for input fields.
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _verifyPasswordController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
 
+  //Sign in method
   Future<void> signInWithEmailAndPassword() async {
     try {
       await Auth().signInWithEmailAndPassword(
@@ -34,8 +36,9 @@ class _LoginState extends State<LoginPage> {
       });
     }
   }
-
+  //Sign up method
   Future<void> signUpWithEmailAndPassword() async {
+    //Check if password and verify password are both same.
     if (_passwordController.text != _verifyPasswordController.text) {
       setState(() {
         errorMessage = 'Passwords do not match';
@@ -62,6 +65,7 @@ class _LoginState extends State<LoginPage> {
     }
   }
 
+  //Initalise and Send new required user data to the Firestore Cloud.
   Future<void> addUserDetails(
     String firstName, String lastName, String email, String userId) async {
       int points = 0;
@@ -81,12 +85,14 @@ class _LoginState extends State<LoginPage> {
       });
     }
 
+  //Boolean value for switch between login and sign up states.
   void _isLoginSwitch(bool value) {
     setState(() {
       isLogin = value;
     });
   }
 
+  // Login state built here:
   Widget _onLoginView() {
     return Column(
       key: const ValueKey('login'),
@@ -97,6 +103,7 @@ class _LoginState extends State<LoginPage> {
                   child: SizedBox(
                     width: 400,
                     child: TextField(
+                      key: const Key('emailField'),
                       controller: _emailController,
                       decoration: const InputDecoration(
                         hintText: 'Email',
@@ -109,11 +116,13 @@ class _LoginState extends State<LoginPage> {
                   child: SizedBox(
                     width: 400,
                     child: TextField(
+                      key: const Key('passwordField'),
                       obscureText: _obscurePassword,
                       controller: _passwordController,
                       decoration: InputDecoration(
                           hintText: 'Password',
                           suffixIcon: IconButton(
+                            key: const Key('passwordToggleIcon'),
                             icon: const Icon(
                               Icons.remove_red_eye,
                               color: Color.fromRGBO(0, 3, 72, 1),
@@ -128,6 +137,7 @@ class _LoginState extends State<LoginPage> {
                   )),
               // Log in button
               TextButton(
+                key: const Key('loginButton'),
                 style: TextButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: const Color.fromRGBO(0, 3, 72, 1),
@@ -139,6 +149,7 @@ class _LoginState extends State<LoginPage> {
               ),
               // Register button
               TextButton(
+                key: const Key('createAccountButton'),
                 style: TextButton.styleFrom(
                     foregroundColor: const Color.fromARGB(255, 153, 163, 255)),
                 child: const Text(
@@ -152,6 +163,7 @@ class _LoginState extends State<LoginPage> {
     ],);
   }
 
+    //Sign up state built here:
     Widget _onSignUpView() {
     return Column(
       key: const ValueKey('signUp'),
@@ -162,6 +174,7 @@ class _LoginState extends State<LoginPage> {
                   child: SizedBox(
                     width: 400,
                     child: TextField(
+                      key: const Key('emailField'),
                       controller: _emailController,
                       decoration: const InputDecoration(
                         hintText: 'Email',
@@ -174,6 +187,7 @@ class _LoginState extends State<LoginPage> {
                   child: SizedBox(
                     width: 400,
                     child: TextField(
+                      key: const Key('firstNameField'),
                       controller: _firstNameController,
                       decoration: const InputDecoration(
                         hintText: 'First Name',
@@ -186,6 +200,7 @@ class _LoginState extends State<LoginPage> {
                   child: SizedBox(
                     width: 400,
                     child: TextField(
+                      key: const Key('lastNameField'),
                       controller: _lastNameController,
                       decoration: const InputDecoration(
                         hintText: 'Last name',
@@ -198,6 +213,7 @@ class _LoginState extends State<LoginPage> {
                   child: SizedBox(
                     width: 400,
                     child: TextField(
+                      key: const Key('passwordField'),
                       obscureText: _obscurePassword,
                       controller: _passwordController,
                       decoration: InputDecoration(
@@ -221,6 +237,7 @@ class _LoginState extends State<LoginPage> {
                   child: SizedBox(
                     width: 400,
                     child: TextField(
+                      key: const Key('verifyPasswordField'),
                       obscureText: _obscureVerifyPassword,
                       controller: _verifyPasswordController,
                       decoration: InputDecoration(
@@ -238,8 +255,9 @@ class _LoginState extends State<LoginPage> {
                           )),
                     ),
                   )),
-              // Log in button
+              // Sing Up button
               TextButton(
+                key: const Key('signUpButton'),
                 style: TextButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: const Color.fromRGBO(0, 3, 72, 1),
@@ -249,8 +267,9 @@ class _LoginState extends State<LoginPage> {
                   signUpWithEmailAndPassword();
                 },
               ),
-              // Register button
+              // Back to login inputs
               TextButton(
+                key: const Key('alreadyHaveAccountButton'),
                 style: TextButton.styleFrom(
                     foregroundColor: const Color.fromARGB(255, 153, 163, 255)),
                 child: const Text(
@@ -265,6 +284,7 @@ class _LoginState extends State<LoginPage> {
     ],);
   }
 
+  // Content build here:
   @override
   Widget build(BuildContext context) {
     return Scaffold(

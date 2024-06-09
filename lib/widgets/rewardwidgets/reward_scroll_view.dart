@@ -14,6 +14,8 @@ class RewardScrollView extends StatefulWidget {
 
 class _RewardScrollState extends State<RewardScrollView> {
 
+  //Initialise selected reward to the first item and 
+  //create new list of user's unlocked rewards.
   Reward? selectedReward = Reward.values.first;
   List<String> unlockedRewards = [];
 
@@ -23,6 +25,7 @@ class _RewardScrollState extends State<RewardScrollView> {
     _fetchUnlockedRewards();
   }
 
+  //Content build here:
   @override
   Widget build(BuildContext context) {
     const Key centerKey = ValueKey<String>('sliver-list');
@@ -38,6 +41,8 @@ class _RewardScrollState extends State<RewardScrollView> {
           const TextStyle(color: Colors.white, fontSize: 14)
         ),
         Expanded(
+
+          //Build scroll view box with Sliver Grid inside.
           child: CustomScrollView(
         slivers: [
           SliverGrid(
@@ -61,6 +66,7 @@ class _RewardScrollState extends State<RewardScrollView> {
                       });
                   },)
                 );
+                //Amount of items to show.
               }, childCount: Reward.values.length
               )
           )

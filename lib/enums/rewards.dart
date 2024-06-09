@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+//Define all rewards with their name, description and icon that will be used.
 enum Reward {
   firstCleaning("Beginner Cleaner", "Perform the first cleaning operation.", Icons.schedule),
   firstTen("First Ten Done", "Perform the first ten cleaning operations.", Icons.schedule),
