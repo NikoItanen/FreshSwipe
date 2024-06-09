@@ -1,4 +1,5 @@
 name: Flutter
+
 on:
   push:
     branches:
@@ -6,7 +7,7 @@ on:
 
 jobs:
   flutter_test:
-    name: Run flutter test and analyze
+    name: Test, analyze and build Flutter app
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -32,3 +33,29 @@ jobs:
 
       - name: Run test files.
         run: flutter test
+
+      - name: Build Android App
+        run: flutter build apk --release
+
+      - name: Upload Android APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: android-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Set up macOS for iOS build
+        if: runner.os == 'macOS'
+        run: |
+          sudo gem install cocoapods
+          sudo xcode-select --switch /Applications/Xcode_15.0.app
+
+      - name: Build iOS App
+        if: runner.os == 'macOS'
+        run: flutter build ios --release
+
+      - name: Upload iOS IPA
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v2
+        with:
+          name: ios-ipa
+          path: build/ios/ipa/*.ipa
