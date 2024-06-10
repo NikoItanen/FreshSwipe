@@ -138,7 +138,7 @@ class RoomDialogState extends State<RoomDialog> {
 
 //Creates an input field for the room creation state.
   Widget _roomInputsField(BuildContext context, StateSetter setState) {
-    selectedHousingId = housingDropdownItems.first.value;
+    
     return Column(
       children: [
         Padding(padding: const EdgeInsets.only(left: 20, right: 20),

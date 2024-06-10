@@ -88,20 +88,6 @@ class _CleaningPageState extends State<CleaningPage> {
                         style:
                             const TextStyle(color: Colors.white, fontSize: 16),
                       )),
-                  Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text(
-                        widget.selectedHousingId,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 16),
-                      )),
-                  Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text(
-                        roomType?.label ?? '',
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 16),
-                      )),
                 ],
               ),
             ),
@@ -140,14 +126,14 @@ class _CleaningPageState extends State<CleaningPage> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: (!isCompleted && canComplete)
-                                  ? Colors.grey
+                                  ? Color.fromARGB(255, 188, 188, 188)
                                   : const Color.fromRGBO(0, 3, 72, 1)),
                           child: Center(
                               child: Text(
                             operation.label,
                             style: TextStyle(
                                 color: (!isCompleted && canComplete)
-                                    ? Colors.black
+                                    ? Color.fromARGB(255, 0, 0, 0)
                                     : Colors.white),
                           )),
                         ));
