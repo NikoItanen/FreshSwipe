@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'pages/menu_page.dart';
-import 'pages/login_page.dart';
-import 'pages/room_page.dart';
-import 'pages/user_page.dart';
-import 'pages/rewards_page.dart';
+import 'ui/menu_page.dart';
+import 'ui/login_page.dart';
+import 'ui/room_page.dart';
+import 'ui/user_page.dart';
+import 'ui/rewards_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:freshswipe/auth_builder.dart';
+import 'package:freshswipe/services/auth_builder.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:freshswipe/auth.dart';
-import 'package:freshswipe/pages/menu_page.dart';
-import 'package:freshswipe/pages/login_page.dart';
+import 'package:freshswipe/services/auth.dart';
+import 'package:freshswipe/ui/menu_page.dart';
+import 'package:freshswipe/ui/login_page.dart';
 import 'package:flutter/material.dart';
 
 //This class takes responsibility to create a new state after authentication is completed!

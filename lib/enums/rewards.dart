@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 //Define all rewards with their name, description and icon that will be used.
-enum Reward {
+enum Rewards {
   firstCleaning("Beginner Cleaner", "Perform the first cleaning operation.", Icons.schedule),
   firstTen("First Ten Done", "Perform the first ten cleaning operations.", Icons.schedule),
   firstFifty("First Fifty Done", "Perform the first fifty cleaning operations.", Icons.schedule),
@@ -16,7 +16,7 @@ enum Reward {
   spotlessRecord("Spotless Record", "Maintain a cleaning streak for six months.", Icons.timelapse),
   oneYearClean("One Year Clean", "Maintain a cleaning streak for a year.", Icons.timelapse);
 
-  const Reward(this.title, this.description, this.icon);
+  const Rewards(this.title, this.description, this.icon);
   final String title;
   final String description;
   final IconData icon;

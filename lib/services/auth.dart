@@ -18,6 +18,15 @@ class Auth {
     }
   }
 
+// Fetch users id.
+  Future<String?> getCurrentUserId() async {
+    final user = _firebaseAuth.currentUser;
+    if (user != null) {
+      return user.uid;
+    } else {
+      return null;
+    }
+  }
 
   //Sign in method for Firebase Authentication.
   Future<void> signInWithEmailAndPassword({

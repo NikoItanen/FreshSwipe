@@ -1,22 +1,57 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:freshswipe/managers/user_manager.dart';
+import 'package:freshswipe/controllers/user_controller.dart';
+import 'package:freshswipe/models/reward.dart';
 
-class RewardManager {
+class RewardController {
+
+  // Add new reward for user.
+  static Future<void> addReward(String rewardName) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        String userId = user.uid;
+        await Reward.addNewReward(userId, rewardName);
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error while adding reward: $e');
+      }
+    }
+  }
+
+  //Getter method for user's unlocked rewards.
+  static Future<List<String>> getUnlockedRewards() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        String userId = user.uid;
+        return await Reward.fetchUnlockedRewards(userId);
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error while fetching unlocked rewards: $e');
+      }
+    }
+    return [];
+  }
+
+
+  //Check all the values needed to open new awards. If the user's values meet the requirements, a new award will be added.
   static Future<void> checkAndUnlockRewards () async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
 
-        int cleaningPoints = await UserManager.fetchAllCleaningPoints();
-        int cleaningActivities = await UserManager.fetchCleaningActivities();
-        List<String> unlockedRewards = await UserManager.fetchUnlockedRewards();
-        int currentLevel = await UserManager.fetchAndHandleCurrentLevel();
-        int currentStreak = await UserManager.fetchAndHandleDayStreak();
+        int cleaningPoints = await UserController.fetchAllCleaningPoints(user.uid);
+        int cleaningActivities = await UserController.fetchCleaningActivities(user.uid);
+        List<String> unlockedRewards = await getUnlockedRewards();
+        int currentLevel = await UserController.fetchAndHandleCurrentLevel(user.uid);
+        int currentStreak = await UserController.fetchAndHandleDayStreak(user.uid);
 
         Future<void> addRewardIfNotUnlocked(String rewardName) async {
           if (!unlockedRewards.contains('rewardName')) {
-            await UserManager.addNewReward(rewardName);
+            await addReward(rewardName);
           }
         }
 

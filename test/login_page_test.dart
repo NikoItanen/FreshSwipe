@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:freshswipe/pages/login_page.dart';
-import 'package:freshswipe/pages/menu_page.dart';
+import 'package:freshswipe/ui/login_page.dart';
+import 'package:freshswipe/ui/menu_page.dart';
 
 void main() {
   testWidgets('Initial page load test', (WidgetTester tester) async {

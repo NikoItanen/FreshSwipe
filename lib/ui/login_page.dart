@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
-import 'package:freshswipe/auth.dart';
+import 'package:freshswipe/services/auth.dart';
+import 'package:freshswipe/controllers/user_controller.dart';
+import 'package:freshswipe/models/user.dart' as model;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -30,7 +32,7 @@ class _LoginState extends State<LoginPage> {
         email: _emailController.text,
         password: _passwordController.text
       );
-    } on FirebaseAuthException catch (e) {
+    } on auth.FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
       });
@@ -50,40 +52,29 @@ class _LoginState extends State<LoginPage> {
         email: _emailController.text,
         password: _passwordController.text);
 
-        final user = FirebaseAuth.instance.currentUser;
-        await addUserDetails(
-          _firstNameController.text,
-          _lastNameController.text,
-          _emailController.text,
-          user!.uid
-  );
+        final user = auth.FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          final newUser = model.User(
+            id: user.uid,
+            firstName: _firstNameController.text,
+            lastName: _lastNameController.text,
+            email: _emailController.text,
+            userCleaningPoints: 0,
+            cleaningActivities: 0,
+            dayStreak: 0,
+            cleanerLevel: 1,
+            userCreated: Timestamp.now(),
+            unlockedRewards: []
+          );
+          await UserController.addUserDetails(newUser);
+        }
 
-    } on FirebaseAuthException catch (e) {
+    } on auth.FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
       });
     }
   }
-
-  //Initalise and Send new required user data to the Firestore Cloud.
-  Future<void> addUserDetails(
-    String firstName, String lastName, String email, String userId) async {
-      int points = 0;
-      int activities = 0;
-      int dayStreak = 0;
-      int cleanerLevel = 1;
-      Timestamp userCreated = Timestamp.now();
-      await FirebaseFirestore.instance.collection('users').doc(userId).set({
-        'firstName': firstName,
-        'lastName': lastName,
-        'email': email,
-        'userCleaningPoints': points,
-        'cleaningActivities': activities,
-        'dayStreak': dayStreak,
-        'userCreated': userCreated,
-        'cleanerLevel': cleanerLevel
-      });
-    }
 
   //Boolean value for switch between login and sign up states.
   void _isLoginSwitch(bool value) {

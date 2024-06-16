@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:freshswipe/managers/reward_manager.dart';
-import 'package:freshswipe/widgets/global/level_star.dart';
-import 'package:freshswipe/widgets/global/navbar.dart';
-import 'package:freshswipe/widgets/rewardwidgets/reward_scroll_view.dart';
+import 'package:freshswipe/controllers/reward_controller.dart';
+import 'package:freshswipe/ui/widgets/global/level_star.dart';
+import 'package:freshswipe/ui/widgets/global/navbar.dart';
+import 'package:freshswipe/ui/widgets/rewardwidgets/reward_scroll_view.dart';
 
 class RewardPage extends StatefulWidget {
   const RewardPage({super.key});
@@ -17,7 +17,7 @@ class _RewardPage extends State<RewardPage> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      RewardManager.checkAndUnlockRewards();
+      RewardController.checkAndUnlockRewards();
     });
 
 
@@ -50,7 +50,7 @@ class _RewardPage extends State<RewardPage> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                const LevelStar(),
+                LevelStar(),
                 const SizedBox(height: 20),
                 Expanded(
                   child: Stack(children: [

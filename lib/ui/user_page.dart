@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:freshswipe/auth.dart';
-import 'package:freshswipe/managers/user_manager.dart';
-import 'package:freshswipe/widgets/global/level_star.dart';
-import 'package:freshswipe/widgets/global/navbar.dart';
+import 'package:freshswipe/services/auth.dart';
+import 'package:freshswipe/controllers/user_controller.dart';
+import 'package:freshswipe/ui/widgets/global/level_star.dart';
+import 'package:freshswipe/ui/widgets/global/navbar.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -60,7 +60,7 @@ class _UserPage extends State<UserPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               // User Page content here below:
               children: [
-                const LevelStar(),
+                LevelStar(),
                 const SizedBox(height: 20),
                 Container(
                   width: double.infinity,
@@ -71,7 +71,7 @@ class _UserPage extends State<UserPage> {
                   child: Center(
                       child: Column(
                     children: [
-                      _userInfo(context),
+                      _userInfo(context, user!),
                       _userPageButton(context, "Account Settings", Colors.white,
                           () {
                         if (kDebugMode) {
@@ -105,13 +105,13 @@ class _UserPage extends State<UserPage> {
 }
 
 //Information about user's account. Future builder will handle fetched data.
-Widget _userInfo(BuildContext context) {
+Widget _userInfo(BuildContext context, User user) {
   return FutureBuilder(
       future: Future.wait([
         Auth().getCurrentUserEmail(),
-        UserManager.fetchAllCleaningPoints(),
-        UserManager.fetchCleaningActivities(),
-        UserManager.fetchUserCreatedDate()
+        UserController.fetchAllCleaningPoints(user.uid),
+        UserController.fetchCleaningActivities(user.uid),
+        UserController.fetchUserCreatedDate(user.uid)
         ]
         ),
       builder: (context, snapshot) {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:freshswipe/widgets/global/level_star.dart';
-import 'package:freshswipe/widgets/global/navbar.dart';
-import 'package:freshswipe/widgets/roomwidgets/dialog_widgets/room_dialog.dart';
-import 'package:freshswipe/widgets/roomwidgets/room_scroll_view.dart';
+import 'package:freshswipe/ui/widgets/global/level_star.dart';
+import 'package:freshswipe/ui/widgets/global/navbar.dart';
+import 'package:freshswipe/ui/roomwidgets/dialog_widgets/room_dialog.dart';
+import 'package:freshswipe/ui/roomwidgets/room_scroll_view.dart';
 
 class RoomsPage extends StatefulWidget {
   const RoomsPage({super.key});
@@ -49,7 +49,7 @@ class _RoomsPage extends State<RoomsPage> {
         heightFactor: 0.9,
         child: Column(
           children: [
-            const LevelStar(),
+            LevelStar(),
             const SizedBox(
               height: 20,
             ),

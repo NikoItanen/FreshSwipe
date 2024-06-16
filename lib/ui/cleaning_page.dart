@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freshswipe/enums/room.dart';
-import 'package:freshswipe/widgets/global/level_star.dart';
+import 'package:freshswipe/ui/widgets/global/level_star.dart';
 
 class CleaningPage extends StatefulWidget {
   final String roomName;
@@ -67,7 +67,7 @@ class _CleaningPageState extends State<CleaningPage> {
       heightFactor: 0.9,
       child: Column(
         children: [
-          const LevelStar(),
+          LevelStar(),
           const SizedBox(
             height: 20,
           ),
@@ -126,14 +126,14 @@ class _CleaningPageState extends State<CleaningPage> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: (!isCompleted && canComplete)
-                                  ? Color.fromARGB(255, 188, 188, 188)
+                                  ? const Color.fromARGB(255, 188, 188, 188)
                                   : const Color.fromRGBO(0, 3, 72, 1)),
                           child: Center(
                               child: Text(
                             operation.label,
                             style: TextStyle(
                                 color: (!isCompleted && canComplete)
-                                    ? Color.fromARGB(255, 0, 0, 0)
+                                    ? const Color.fromARGB(255, 0, 0, 0)
                                     : Colors.white),
                           )),
                         ));

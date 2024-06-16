@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:freshswipe/controllers/housing_controller.dart';
 import 'package:freshswipe/enums/room.dart';
 
 // This dialog takes responsibility for a new room, house, or housing creation.
@@ -26,7 +25,7 @@ class RoomDialogState extends State<RoomDialog> {
   void initState() {
     super.initState();
     _fetchHousingDropdownItems();
-  } 
+  }
 
   @override
   void dispose() {
@@ -85,7 +84,8 @@ class RoomDialogState extends State<RoomDialog> {
                                       ),
                                       roomMode
                                           ? _roomInputsField(context, setState)
-                                          : _housingInputsField(context, setState)
+                                          : _housingInputsField(
+                                              context, setState)
                                     ],
                                   )))));
             }));
@@ -95,66 +95,107 @@ class RoomDialogState extends State<RoomDialog> {
   Widget _dialogModeSwitchButtons(StateSetter setState) {
     return Row(
       children: [
-        Expanded(child: Stack(
+        Expanded(
+            child: Stack(
           children: [
             Container(
               color: !roomMode ? Colors.grey[400] : Colors.grey[600],
               height: 40,
               width: 225,
             ),
-            Center(child: TextButton(
-                child:
-                    const Text('Room', style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  setState(() {
-                    roomMode = true;
-                  });
-                }))
-            
+            Center(
+                child: TextButton(
+                    child: const Text('Room',
+                        style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      setState(() {
+                        roomMode = true;
+                      });
+                    }))
           ],
         )),
-        Expanded(child: Stack(
+        Expanded(
+            child: Stack(
           children: [
             Container(
               color: roomMode ? Colors.grey[400] : Colors.grey[600],
               height: 40,
               width: 225,
             ),
-            Center(child: TextButton(
-                child: const Text('Housing',
-                    style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  setState(() {
-                    roomMode = false;
-                  });
-                }))
-            
+            Center(
+                child: TextButton(
+                    child: const Text('Housing',
+                        style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      setState(() {
+                        roomMode = false;
+                      });
+                    }))
           ],
         ))
-        
       ],
     );
   }
 
+  Future<void> _fetchHousingDropdownItems() async {
+    try {
+      var items = await HousingController.fetchHousingDropdownItems();
+      setState(() {
+        housingDropdownItems = items;
+        if (housingDropdownItems.isEmpty) {
+          selectedHousingId = null;
+        } else {
+          selectedHousingId = housingDropdownItems.first.value;
+        }
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching housing dropdown items: $e');
+      }
+    }
+  }
+
 //Creates an input field for the room creation state.
   Widget _roomInputsField(BuildContext context, StateSetter setState) {
-    
     return Column(
       children: [
-        Padding(padding: const EdgeInsets.only(left: 20, right: 20),
-            child: DropdownButton<String>(
-              hint: const Text('Select Housing'),
-              value: selectedHousingId ?? housingDropdownItems.first.value,
-              
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedHousingId = newValue;
-                });
-              },
-              items: housingDropdownItems,
-            ),
-            ),
-            const SizedBox(height: 20,),
+        FutureBuilder(
+            future: HousingController.fetchHousingDropdownItems(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: housingDropdownItems.isEmpty
+                        ? const Text('You have not added housings!')
+                        : DropdownButton<String>(
+                            hint: const Text('Select Housing'),
+                            value: selectedHousingId ??
+                                housingDropdownItems.first.value,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedHousingId = newValue;
+                              });
+                            },
+                            items: housingDropdownItems.isNotEmpty
+                                ? housingDropdownItems
+                                : [
+                                    const DropdownMenuItem(
+                                        value: null,
+                                        child: Text('No housing available!'))
+                                  ],
+                          ),
+                  );
+                }
+              }
+            }),
+        const SizedBox(
+          height: 20,
+        ),
         Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: TextField(
@@ -162,8 +203,8 @@ class RoomDialogState extends State<RoomDialog> {
               decoration: const InputDecoration(hintText: 'Room Name:'),
             )),
         const SizedBox(height: 25),
-            const SizedBox(height: 25),
-            Padding(
+        const SizedBox(height: 25),
+        Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: DropdownMenu<RoomType>(
               controller: roomTypeController,
@@ -197,30 +238,14 @@ class RoomDialogState extends State<RoomDialog> {
         TextButton(
             child: const Text('Add Room'),
             onPressed: () {
-              onAddRoom();
+              if (housingDropdownItems.isNotEmpty) {
+                HousingController.onAddRoom(selectedHousingId!,
+                    roomNameController.text, selectedRoomType.toString());
+              }
               Navigator.pop(context);
             }),
       ],
     );
-  }
-
-
-// Fetches user's housings from database
-  Future<void> _fetchHousingDropdownItems() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      String userId = user.uid;
-      QuerySnapshot housingQuery = await FirebaseFirestore.instance.collection('users').doc(userId).collection('housings').get();
-
-      List<DropdownMenuItem<String>> items = housingQuery.docs.map((doc) {
-        return DropdownMenuItem<String>(value: doc.id, child: Text(doc['housingName']),
-        );
-      }).toList();
-
-      setState(() {
-        housingDropdownItems = items;
-      });
-    }
   }
 
 //Creates an input field for the housing creation state.
@@ -254,70 +279,11 @@ class RoomDialogState extends State<RoomDialog> {
         TextButton(
             child: const Text('Add Housing'),
             onPressed: () async {
-              onAddHousing();
+              HousingController.onAddHousing(
+                  housingNameController.text, isChecked);
               Navigator.pop(context);
             }),
       ],
     );
-  }
-
-
-//Add a room to the database.
-  Future<void> onAddRoom() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null && selectedHousingId != null) {
-      String userId = user.uid;
-      String roomName = roomNameController.text;
-      String roomType = selectedRoomType != null ? selectedRoomType.toString() : 'Unknown';
-      int roomPoints = 0;
-
-      await FirebaseFirestore.instance.collection('users').doc(userId).collection('housings').doc(selectedHousingId).collection('rooms').add({
-        'roomName': roomName,
-        'roomType': roomType,
-        'roomPoints':roomPoints,
-        'timeStamp': FieldValue.serverTimestamp()
-      });
-      if (kDebugMode) {
-        print('Room added to Firestore!');
-      }
-    } else {
-      if(kDebugMode) {
-        print('No user logged in!');
-      }
-    }
-  }
-
-//Add housing to the database.
-  Future<void> onAddHousing() async {
-    try {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      String userId = user.uid;
-      String housingName = housingNameController.text;
-      if (kDebugMode) {
-        print('Housing name: $housingName');
-        print('Main housing: $isChecked');
-      }
-
-      await FirebaseFirestore.instance.collection('users').doc(userId).collection('housings').add({
-        'housingName': housingName,
-        'isMainHousing': isChecked,
-        'timestamp': FieldValue.serverTimestamp()
-      });
-
-      if (kDebugMode) {
-        print('Housing added to Firestore!');
-      }
-    } else {
-      if(kDebugMode) {
-        print('No user logged in!');
-      }
-    }
-    } catch (e, stackTrace) {
-      if (kDebugMode) {
-        print('Error adding housing: $e');
-        print(stackTrace);
-      }
-    }
   }
 }

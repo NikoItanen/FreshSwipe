@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:freshswipe/controllers/reward_controller.dart';
 import 'package:freshswipe/enums/rewards.dart';
-import 'package:freshswipe/managers/user_manager.dart';
 
 //This class takes responsibility for the rewards listing. 
 
@@ -16,7 +16,7 @@ class _RewardScrollState extends State<RewardScrollView> {
 
   //Initialise selected reward to the first item and 
   //create new list of user's unlocked rewards.
-  Reward? selectedReward = Reward.values.first;
+  Rewards? selectedReward = Rewards.values.first;
   List<String> unlockedRewards = [];
 
   @override
@@ -67,7 +67,7 @@ class _RewardScrollState extends State<RewardScrollView> {
                   },)
                 );
                 //Amount of items to show.
-              }, childCount: Reward.values.length
+              }, childCount: Rewards.values.length
               )
           )
           ]
@@ -76,13 +76,14 @@ class _RewardScrollState extends State<RewardScrollView> {
       ],) 
     );
   }
-  Reward _getRewardForIndex(int index) {
-    return Reward.values[index];
+
+  Rewards _getRewardForIndex(int index) {
+    return Rewards.values[index];
   }
 
 
 Future<void> _fetchUnlockedRewards() async {
-  List<String> rewards = await UserManager.fetchUnlockedRewards();
+  List<String> rewards = await RewardController.getUnlockedRewards();
   setState(() {
     unlockedRewards = rewards;
   });

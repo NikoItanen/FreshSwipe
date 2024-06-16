@@ -1,12 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:freshswipe/managers/user_manager.dart';
+import 'package:freshswipe/controllers/user_controller.dart';
 
 //This class takes responsibility for the functionality and appearance of the cleanliness star. 
 
 class LevelStar extends StatelessWidget {
+  final User? user = FirebaseAuth.instance.currentUser;
 
-  const LevelStar({
-    super.key});
+  LevelStar({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class LevelStar extends StatelessWidget {
               ),
               Center(
                 child: FutureBuilder<int>(
-                  future: UserManager.fetchAndHandleCurrentLevel(),
+                  future: UserController.fetchAndHandleCurrentLevel(user!.uid),
                   builder:(context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
