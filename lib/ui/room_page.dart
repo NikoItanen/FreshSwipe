@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:freshswipe/ui/widgets/global/level_star.dart';
 import 'package:freshswipe/ui/widgets/global/navbar.dart';
-import 'package:freshswipe/ui/roomwidgets/dialog_widgets/room_dialog.dart';
-import 'package:freshswipe/ui/roomwidgets/room_scroll_view.dart';
+import 'package:freshswipe/ui/widgets/roomwidgets/dialog_widgets/room_dialog.dart';
+import 'package:freshswipe/ui/widgets/roomwidgets/room_scroll_view.dart';
 
 class RoomsPage extends StatefulWidget {
   const RoomsPage({super.key});
@@ -13,8 +13,6 @@ class RoomsPage extends StatefulWidget {
 
 class _RoomsPage extends State<RoomsPage> {
   int _selectedIndex = 3;
-
-
 
   void _onItemTapped(int index) {
     setState(() {

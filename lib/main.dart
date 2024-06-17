@@ -5,7 +5,7 @@ import 'ui/room_page.dart';
 import 'ui/user_page.dart';
 import 'ui/rewards_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:freshswipe/services/auth_builder.dart';
+import 'package:freshswipe/ui/auth_builder.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 

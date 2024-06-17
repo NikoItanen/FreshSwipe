@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freshswipe/controllers/housing_controller.dart';
-import 'package:freshswipe/enums/room.dart';
+import 'package:freshswipe/enums/rooms.dart';
 
 // This dialog takes responsibility for a new room, house, or housing creation.
 class RoomDialog extends StatefulWidget {
