@@ -1,16 +1,65 @@
-# freshswipe
+#FreshSwipe
+Welcome to FreshSwipe – the app designed to keep your home clean and make housekeeping fun!
 
-A new Flutter project.
+## Overview
+FreshSwipe is your go-to app for managing and enhancing your cleaning routines. With FreshSwipe, you can track the regularity of your cleaning tasks and transform your daily chores into a rewarding experience.
 
-## Getting Started
+## Features
+Cleaning Routines: Set up and manage a variety of cleaning tasks such as vacuuming, dishwashing, and toilet cleaning. FreshSwipe helps you keep track of these routines with ease.
 
-This project is a starting point for a Flutter application.
+Room Types: Organize cleaning tasks by room types including bathroom, living room, bedroom, and kitchen.
 
-A few resources to get you started if this is your first Flutter project:
+Achievements: Earn rewards and achievements based on your cleaning performance and consistency. The more you use the app, the more milestones you can unlock!
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Progress Tracking: Monitor your cleaning habits over time with our intuitive tracking system, which visualizes how frequently you engage with the app.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Swiping Action: Mark tasks as completed by swiping them away, adding a fun and interactive element to your cleaning routine.
+
+## Installation
+To get started with FreshSwipe, follow these steps:
+
+Clone the repository:
+```bash
+git clone https://github.com/yourusername/freshswipe.git
+```
+
+Navigate into the project directory:
+```bash
+cd freshswipe
+```
+
+Install the necessary dependencies:
+```bash
+npm install
+```
+
+Start the application:
+```bash
+npm start
+```
+
+## Usage
+Open FreshSwipe and create your cleaning routines.
+Assign tasks to specific rooms and set up your cleaning schedule.
+Rate the cleanliness of each room after completing the tasks.
+Swipe away completed tasks to track your progress and earn rewards.
+
+##Contributing
+We welcome contributions to FreshSwipe! If you’d like to help improve the app, please follow these guidelines:
+
+## Fork the repository.
+
+Create a feature branch:
+git checkout -b feature/YourFeatureName
+
+Commit your changes:
+git commit -am 'Add some feature'
+
+Push to the branch:
+git push origin feature/YourFeatureName
+
+License
+This project is licensed under the MIT License – see the LICENSE file for details.
+
+Contact
+For any questions or feedback, please reach out to itanenniko@gmail.com.
