@@ -1,4 +1,4 @@
-#FreshSwipe
+# FreshSwipe
 Welcome to FreshSwipe – the app designed to keep your home clean and make housekeeping fun!
 
 ## Overview
