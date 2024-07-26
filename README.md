@@ -50,16 +50,22 @@ We welcome contributions to FreshSwipe! If you’d like to help improve the app,
 ## Fork the repository.
 
 Create a feature branch:
+```bash
 git checkout -b feature/YourFeatureName
+```
 
 Commit your changes:
+```bash
 git commit -am 'Add some feature'
+```
 
 Push to the branch:
+```bash
 git push origin feature/YourFeatureName
+```
 
-License
+## License
 This project is licensed under the MIT License – see the LICENSE file for details.
 
-Contact
+## Contact
 For any questions or feedback, please reach out to itanenniko@gmail.com.
