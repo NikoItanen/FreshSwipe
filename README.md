@@ -44,7 +44,7 @@ Assign tasks to specific rooms and set up your cleaning schedule.
 Rate the cleanliness of each room after completing the tasks.
 Swipe away completed tasks to track your progress and earn rewards.
 
-##Contributing
+## Contributing
 We welcome contributions to FreshSwipe! If you’d like to help improve the app, please follow these guidelines:
 
 ## Fork the repository.
